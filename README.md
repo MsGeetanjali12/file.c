@@ -78,6 +78,104 @@ void deleteRecord()
     rename("temp.txt", "data.txt");
     fp = fopen("data.txt", "rb+");
 }
+void searchByName()
+{
+    int option;
+    int on = 0;
+    printf("1.search by name\n2.search by salary\n3.search by age\n4.search by id\nenter your option\n");
+    scanf("%d", &option);
+    switch (option)
+    {
+    case 1:
+    {
+        char empname2[50];
+        printf("\nEnter employee name to search : ");
+        scanf("%s", empname2);
+        rewind(fp);
+
+        while (fread(&e, size, 1, fp) == 1)
+        {
+            if (strcmp(e.name, empname2) == 0)
+                printf("\n%s\t\t%d\t\t%.2f\t%10d", e.name, e.age, e.salary, e.id);
+            on = on + 1;
+        }
+    }
+    break;
+
+    case 2:
+    {
+        int emps;
+        int k;
+        int i;
+        printf("\nEnter employee salary to search : ");
+        scanf("%d", &emps);
+        rewind(fp);
+
+        while (fread(&e, size, 1, fp) == 1)
+        {
+            k = e.salary;
+
+            if (k == emps)
+            {
+                on = on + 1;
+                printf("\n%s\t\t%d\t\t%.2f\t%10d", e.name, e.age, e.salary, e.id);
+            }
+        }
+    }
+    break;
+    case 3:
+    {
+        int emps;
+        int k;
+        int i;
+        printf("\nEnter employee age to search : ");
+        scanf("%d", &emps);
+        rewind(fp);
+
+        while (fread(&e, size, 1, fp) == 1)
+        {
+            k = e.age;
+
+            if (k == emps)
+            {
+                on = on + 1;
+                printf("\n%s\t\t%d\t\t%.2f\t%10d", e.name, e.age, e.salary, e.id);
+            }
+        }
+    }
+    break;
+    case 4:
+    {
+
+        int emps;
+        int k;
+        int i;
+        printf("\nEnter employee id to search : ");
+        scanf("%d", &emps);
+        rewind(fp);
+
+        while (fread(&e, size, 1, fp) == 1)
+        {
+            k = e.id;
+
+            if (k == emps)
+            {
+                on = on + 1;
+                printf("\n%s\t\t%d\t\t%.2f\t%10d", e.name, e.age, e.salary, e.id);
+            }
+        }
+    }
+    break;
+    default:
+        printf("invalid option....\n");
+        on=on+1;
+        break;
+    }
+    if (on == 0)
+    {
+        printf("The given search item cannot be matched with any record");
+    }
+}
 
 int main()
 {
@@ -99,7 +197,8 @@ int main()
         printf("\n2.___DISPLAY RECORD___\n");
         printf("\n3.___MODIFY RECORDS___\n");
         printf("\n4.___DELETE RECORD___\n");
-        printf("\n5.___EXIT___\n");
+        printf("\n5.___SEARCH___\n");
+        printf("\n6.__EXIT___\n");
         printf("\nENTER YOUR CHOICE:\n");
         fflush(stdin);
         scanf("%d", &choice);
@@ -123,6 +222,10 @@ int main()
             break;
 
         case 5:
+            searchByName();
+            break;
+
+        case 6:
             fclose(fp);
             exit(0);
             break;
